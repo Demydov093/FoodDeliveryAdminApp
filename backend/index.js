@@ -7,6 +7,8 @@ const rateLimit = require("express-rate-limit");
 const crypto = require("crypto");
 
 const categoryRoutes = require("./routes/categories");
+const logger = require("./utils/logger");
+const { errorHandler } = require("./middlewares/errorHandler");
 
 const app = express();
 
@@ -23,5 +25,7 @@ app.use(cors({ origin: "http://localhost:3000" }));
 
 app.use(express.json());
 app.use(bodyParser.raw({ type: "application-json" }));
+
+app.use(errorHandler);
 
 app.listen(5000, () => logger.info("Server running on http://localhost:5000"));
