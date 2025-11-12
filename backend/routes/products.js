@@ -31,7 +31,7 @@ const updateProductSchema = zod.object({
 router.get("/", getProducts);
 router.get("/:id/products", getProduct);
 router.post("/", validate(productSchema), createProduct);
-router.post("/:id", validate(updateProductSchema), updateProduct);
+router.put("/:id", validate(updateProductSchema), updateProduct);
 router.delete("/:id", deleteProduct);
 
 module.exports = router;
