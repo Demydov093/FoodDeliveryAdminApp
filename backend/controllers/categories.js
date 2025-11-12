@@ -53,8 +53,8 @@ async function updateCategory(req, res) {
 
 async function deleteCategory(req, res) {
   const { id } = req.params;
-  await prisma.product.deleteMany({ where: { categoryId: id } });
-  await prisma.category.delete({ where: { id } });
+  await prisma.product?.deleteMany({ where: { categoryId: id } });
+  await prisma.category?.delete({ where: { id } });
 
   res.json({ message: "Category and its products deleted" });
 }
