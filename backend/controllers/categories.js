@@ -6,7 +6,7 @@ async function getCategories(req, res) {
   const { page = 1, limit = 10 } = req.query;
   const skip = (page - 1) * limit;
 
-  const categories = await prisma?.categories.findMany({
+  const categories = await prisma?.category.findMany({
     include: { products: true },
     skip: +skip,
     take: +limit,
@@ -20,7 +20,7 @@ async function getProductsByCategory(req, res) {
   const { page = 1, limit = 10 } = req.query;
   const skip = (page - 1) * limit;
 
-  const products = await prisma?.categories.findMany({
+  const products = await prisma?.product.findMany({
     where: { categoryId: id },
     skip: +skip,
     take: +limit,
@@ -31,9 +31,8 @@ async function getProductsByCategory(req, res) {
 
 async function createCategory(req, res) {
   const { name, imageUrl } = req.body;
-
-  const category = await prisma?.category.update({
-    where: { id },
+  console.log(req.body);
+  const category = await prisma?.category.create({
     data: { name, imageUrl },
   });
 

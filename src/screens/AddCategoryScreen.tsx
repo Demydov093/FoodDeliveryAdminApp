@@ -2,8 +2,12 @@ import { View, Text, TextInput, Pressable } from "react-native";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Ionicons } from "@expo/vector-icons";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createCategory } from "../api/apiClient";
+import { useNavigation } from "@react-navigation/native";
 
 const AddCategoryScreen = () => {
+  const navigation = useNavigation();
   const {
     control,
     handleSubmit,
@@ -11,6 +15,26 @@ const AddCategoryScreen = () => {
   } = useForm<{ name: string; imageUrl?: string }>({
     defaultValues: { name: "", imageUrl: "" },
   });
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: ({ name, imageUrl }: { name: string; imageUrl?: string }) =>
+      createCategory({ name, imageUrl }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["categories"] });
+      console.log("Success creating category");
+      navigation.goBack();
+    },
+    onError: (error) => {
+      console.log("Error creating category:", error);
+    },
+  });
+
+  const onSubmit = (data: { name: string; imageUrl?: string }) => {
+    console.log("Submit pressed", data);
+    mutation.mutate({ name: data.name, imageUrl: data.imageUrl || undefined });
+  };
 
   return (
     <View className="flex-1 bg-gray-20 p-4">
@@ -30,7 +54,7 @@ const AddCategoryScreen = () => {
           <TextInput
             placeholder="Type name"
             value={value}
-            onChange={onChange}
+            onChangeText={onChange}
             className="bg-white p-3 rounded-lg border border-gray-300 mt-2 py-2"
           />
         )}
@@ -50,7 +74,7 @@ const AddCategoryScreen = () => {
           <TextInput
             placeholder="Give image link here"
             value={value}
-            onChange={onChange}
+            onChangeText={onChange}
             className="bg-white p-3 rounded-lg border border-gray-300 mt-2 py-2"
           />
         )}
@@ -60,8 +84,9 @@ const AddCategoryScreen = () => {
       )}
 
       <Pressable
-        onPress={handleSubmit}
+        onPress={handleSubmit(onSubmit)}
         className="bg-black flex-row gap-3 justify-center items-center mt-6 p-4 rounded-xl"
+        disabled={mutation.status === "pending"}
       >
         <Ionicons name="save" size={18} color="#fff" />
         <Text className="text-white">Create category</Text>
