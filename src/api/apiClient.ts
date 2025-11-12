@@ -35,7 +35,7 @@ export const createProduct = async (data: {
   name: string;
   price: number;
   imageUrl?: string;
-  decription?: string;
+  description?: string;
 }) => (await api.post("/products", data)).data;
 export const updateProduct = async (
   id: string,
@@ -43,7 +43,7 @@ export const updateProduct = async (
     name?: string;
     price?: number;
     imageUrl?: string;
-    decription?: string;
+    description?: string;
   }
 ) => (await api.put(`/products/${id}`, data)).data;
 export const deleteProduct = async (id: string) =>

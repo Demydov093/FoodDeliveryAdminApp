@@ -48,7 +48,15 @@ const CategoriesScreen = () => {
   };
 
   const renderCategory = ({ item }: { item: Category }) => (
-    <TouchableOpacity className="bg-white rounded-xl p-4 mx-3 my-2 flex-row items-center shadow-xl">
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Products", {
+          categoryId: item?.id,
+          categoryName: item?.name,
+        })
+      }
+      className="bg-white rounded-xl p-4 mx-3 my-2 flex-row items-center shadow-xl"
+    >
       <Image
         className="w-14 h-14 rounded-lg mr-4 bg-gray-100"
         source={{
