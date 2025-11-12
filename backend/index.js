@@ -6,7 +6,8 @@ const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
 const crypto = require("crypto");
 
-const categoryRoutes = require("./routes/categories");
+const categoriesRoutes = require("./routes/categories");
+const productsRoutes = require("./routes/products");
 const logger = require("./utils/logger");
 const { errorHandler } = require("./middlewares/errorHandler");
 
@@ -25,6 +26,9 @@ app.use(cors({ origin: "http://localhost:3000" }));
 
 app.use(express.json());
 app.use(bodyParser.raw({ type: "application-json" }));
+
+app.use("/api/v1/categories", categoriesRoutes);
+app.use("/api/v1/products", productsRoutes);
 
 app.use(errorHandler);
 
