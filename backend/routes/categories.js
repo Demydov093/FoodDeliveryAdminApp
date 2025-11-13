@@ -4,6 +4,7 @@ const {
   getCategories,
   getProductsByCategory,
   updateCategory,
+  getCategory,
 } = require("../controllers/categories");
 
 const express = require("express");
@@ -19,6 +20,7 @@ const categorySchema = zod.object({
 });
 
 router.get("/", getCategories);
+router.get("/:id", getCategory);
 router.get("/:id/products", getProductsByCategory);
 router.post("/", validate(categorySchema), createCategory);
 router.put("/:id", validate(categorySchema), updateCategory);

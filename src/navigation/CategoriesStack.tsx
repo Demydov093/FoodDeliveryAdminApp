@@ -5,6 +5,7 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import AddCategoryScreen from "../screens/AddCategoryScreen";
 import ProductsScreen from "../screens/ProductsScreen";
 import AddProductsScreen from "../screens/AddProductsScreen";
+import EditCategoryScreen from "../screens/EditCategoryScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,11 @@ const CategoriesStack = () => {
         name="AddProduct"
         component={AddProductsScreen}
         options={{ title: "Add Products" }}
+      />
+      <Stack.Screen
+        name="EditCategory"
+        component={EditCategoryScreen}
+        options={{ title: "Edit Category" }}
       />
     </Stack.Navigator>
   );

@@ -15,6 +15,20 @@ async function getCategories(req, res) {
   res.json(categories);
 }
 
+async function getCategory(req, res) {
+  const { id } = req.params;
+  const category = await prisma.category.findUnique({
+    where: { id },
+    include: { products: true },
+  });
+
+  if (!category) {
+    return res.status(404).json({ error: "Category not found" });
+  }
+
+  res.json(category);
+}
+
 async function getProductsByCategory(req, res) {
   const { id } = req.params;
   const { page = 1, limit = 10 } = req.query;
@@ -61,6 +75,7 @@ async function deleteCategory(req, res) {
 
 module.exports = {
   getCategories,
+  getCategory,
   getProductsByCategory,
   createCategory,
   updateCategory,
