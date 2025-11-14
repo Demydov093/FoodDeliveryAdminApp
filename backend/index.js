@@ -8,6 +8,7 @@ const crypto = require("crypto");
 
 const categoriesRoutes = require("./routes/categories");
 const productsRoutes = require("./routes/products");
+const authRoutes = require("./routes/auth");
 const logger = require("./utils/logger");
 const { errorHandler } = require("./middlewares/errorHandler");
 
@@ -29,6 +30,7 @@ app.use(bodyParser.raw({ type: "application-json" }));
 
 app.use("/api/v1/categories", categoriesRoutes);
 app.use("/api/v1/products", productsRoutes);
+app.use("/api/v1/auth", authRoutes);
 
 app.use(errorHandler);
 
