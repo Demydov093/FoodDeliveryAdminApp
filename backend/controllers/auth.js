@@ -10,7 +10,7 @@ const { sendEmailWithRetry } = require("../utils/emailQueue");
 async function signUp(req, res) {
   const { email, password, phone } = req.body;
   try {
-    const existingUser = await prisma.user.findUnique({ where: email });
+    const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser)
       return res.status(400).json({ error: "Email already exist!" });
 
